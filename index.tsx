@@ -174,7 +174,7 @@ const AIOverviewContent: React.FC<{ data: TurnData['aiOverview'] }> = ({ data })
 
 const VisualContent: React.FC = () => {
   const [activeTab, setActiveTab] = useState("Knowledge Graph");
-  const tabs = ["Knowledge Graph", "Empirical Evidence"];
+  const tabs = ["Knowledge Graph", "Provenance"];
 
   return (
     <div className="space-y-4">
@@ -221,7 +221,7 @@ const VisualContent: React.FC = () => {
 
 const EvidenceList: React.FC<{ citations: TurnData['citations'] }> = ({ citations }) => {
   const [activeTab, setActiveTab] = useState("References");
-  const tabs = ["References", "Empirical Evidence", "PanKbase Links", "External Links"];
+  const tabs = ["References", "Provenance", "PanKbase Links", "External Links"];
 
   const mockEmpirical = [
     { id: 'E1', title: 'GTEx V8 Expression Analysis', detail: 'Significant eQTL detected in Pancreas tissue', metric: 'P-Val: 4.84e-17' },
@@ -242,7 +242,7 @@ const EvidenceList: React.FC<{ citations: TurnData['citations'] }> = ({ citation
   const getCount = () => {
     switch(activeTab) {
       case "References": return citations.length;
-      case "Empirical Evidence": return mockEmpirical.length;
+      case "Provenance": return mockEmpirical.length;
       case "PanKbase Links": return mockInternal.length;
       case "External Links": return mockExternal.length;
       default: return 0;
@@ -285,7 +285,7 @@ const EvidenceList: React.FC<{ citations: TurnData['citations'] }> = ({ citation
           </div>
         ))}
 
-        {activeTab === "Empirical Evidence" && mockEmpirical.map(item => (
+        {activeTab === "Provenance" && mockEmpirical.map(item => (
           <div key={item.id} className="p-4 bg-white border border-slate-100 rounded-2xl hover:border-[#008c8c]/30 hover:shadow-md transition-all group/emp">
             <div className="flex gap-4">
               <div className="w-8 h-8 rounded-lg bg-[#008c8c]/10 text-[#008c8c] text-[12px] font-black flex items-center justify-center shrink-0">
@@ -401,11 +401,11 @@ const Header: React.FC = () => (
     <div className="h-[3px] bg-[#008c8c]" />
 
     {/* beta tag */}
-    <div className="max-w-[1600px] mx-auto px-6">
+    {/* <div className="max-w-[1600px] mx-auto px-6">
       <span className="inline-flex -mt-3 translate-y-3 text-[11px] px-2 py-0.5 rounded bg-[#008c8c] text-white font-bold">
         beta
       </span>
-    </div>
+    </div> */}
   </header>
 );
 
