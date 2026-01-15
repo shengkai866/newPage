@@ -111,10 +111,8 @@ const SectionHeader: React.FC<{ label: string; count?: number }> = ({ label, cou
 
 const GlobalDirectory: React.FC<{ turns: TurnData[], onNavigate: (id: string) => void }> = ({ turns, onNavigate }) => {
   return (
-    <nav className="hidden xl:flex flex-col w-[120px] fixed top-[112px] left-10 overflow-y-visible">
-      {/* Timeline List (Header removed as requested) */}
+    <nav className="hidden xl:flex flex-col w-[120px] fixed top-[132px] left-10 overflow-y-visible">
       <div className="relative w-full">
-        {/* Vertical Line - Centered exactly behind dots */}
         <div className="absolute right-[19px] top-1 bottom-1 w-px bg-slate-200"></div>
 
         <div className="flex flex-col gap-10">
@@ -124,20 +122,17 @@ const GlobalDirectory: React.FC<{ turns: TurnData[], onNavigate: (id: string) =>
               onClick={() => onNavigate(turn.id)}
               className="group relative flex items-center justify-end cursor-pointer"
             >
-              {/* Tooltip on Hover */}
               <div className="absolute left-full ml-6 opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-300 translate-x-[-10px] group-hover:translate-x-0 z-[60]">
                 <div className="bg-slate-900 text-white text-[12px] font-medium py-3 px-4 rounded-xl shadow-2xl min-w-[200px] max-w-[300px] border border-white/10 backdrop-blur-md">
-                   {turn.query}
-                   <div className="absolute left-[-6px] top-1/2 -translate-y-1/2 w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-r-[6px] border-r-slate-900"></div>
+                  {turn.query}
+                  <div className="absolute left-[-6px] top-1/2 -translate-y-1/2 w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-r-[6px] border-r-slate-900"></div>
                 </div>
               </div>
 
-              {/* Label */}
               <span className="text-[16px] font-medium text-slate-500 group-hover:text-slate-800 transition-colors mr-4 text-right">
                 Q{idx + 1}
               </span>
 
-              {/* Dot Track (Fixed Width Container to center dot and line) */}
               <div className="w-[40px] flex justify-center items-center shrink-0 relative z-10">
                 <div className="w-[10px] h-[10px] bg-slate-400 rounded-full border-[2px] border-white group-hover:bg-[#008c8c] group-hover:scale-150 transition-all duration-300"></div>
               </div>
@@ -205,17 +200,18 @@ const VisualContent: React.FC = () => {
       <div className="w-full aspect-[16/11] bg-[#f2f7f9] rounded-[24px] border border-slate-100/50 flex items-center justify-center relative overflow-hidden group">
         {activeTab === "Knowledge Graph" ? (
           <div className="relative w-12 h-12 flex items-center justify-center">
-              {/* Center Circle Icon */}
-              <div className="w-8 h-8 rounded-full border border-[#d1dee2] flex items-center justify-center">
-                  <div className="w-px h-10 bg-[#d1dee2] absolute rotate-45"></div>
-              </div>
+            <div className="w-8 h-8 rounded-full border border-[#d1dee2] flex items-center justify-center">
+              <div className="w-px h-10 bg-[#d1dee2] absolute rotate-45"></div>
+            </div>
           </div>
         ) : (
           <div className="flex flex-col items-center gap-3 opacity-50">
-             <div className="w-10 h-10 rounded-xl bg-slate-200 flex items-center justify-center text-slate-400">
-               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
-             </div>
-             <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Chart View</span>
+            <div className="w-10 h-10 rounded-xl bg-slate-200 flex items-center justify-center text-slate-400">
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </div>
+            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Chart View</span>
           </div>
         )}
       </div>
@@ -225,7 +221,6 @@ const VisualContent: React.FC = () => {
 
 const EvidenceList: React.FC<{ citations: TurnData['citations'] }> = ({ citations }) => {
   const [activeTab, setActiveTab] = useState("References");
-  
   const tabs = ["References", "Empirical Evidence", "PanKbase Links", "External Links"];
 
   const mockEmpirical = [
@@ -256,30 +251,24 @@ const EvidenceList: React.FC<{ citations: TurnData['citations'] }> = ({ citation
 
   return (
     <div className="space-y-4">
-      <SectionHeader label="EVIDENCES" />
-      
-      {/* Tabs */}
+      <SectionHeader label="EVIDENCES" count={getCount()} />
+
       <div className="flex justify-between border-b border-slate-200 mb-4 px-1">
         {tabs.map(tab => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
             className={`flex items-center justify-center pb-3 text-[10px] font-medium transition-all relative text-center leading-3 max-w-[60px] ${
-              activeTab === tab 
-                ? 'text-[#008c8c]' 
-                : 'text-slate-400 hover:text-slate-600'
+              activeTab === tab ? 'text-[#008c8c]' : 'text-slate-400 hover:text-slate-600'
             }`}
           >
             {tab}
-            {activeTab === tab && (
-              <div className="absolute bottom-[-1px] left-0 right-0 h-[1px] bg-[#008c8c] z-10"></div>
-            )}
+            {activeTab === tab && <div className="absolute bottom-[-1px] left-0 right-0 h-[1px] bg-[#008c8c] z-10"></div>}
           </button>
         ))}
       </div>
 
       <div className="flex flex-col gap-3 max-h-[380px] overflow-y-auto pr-3 custom-scrollbar">
-        
         {activeTab === "References" && citations.map(c => (
           <div key={c.id} className="p-4 bg-white border border-slate-100 rounded-2xl hover:border-[#008c8c]/30 hover:shadow-md transition-all group/cit">
             <div className="flex gap-4">
@@ -297,75 +286,130 @@ const EvidenceList: React.FC<{ citations: TurnData['citations'] }> = ({ citation
         ))}
 
         {activeTab === "Empirical Evidence" && mockEmpirical.map(item => (
-           <div key={item.id} className="p-4 bg-white border border-slate-100 rounded-2xl hover:border-[#008c8c]/30 hover:shadow-md transition-all group/emp">
-             <div className="flex gap-4">
-               <div className="w-8 h-8 rounded-lg bg-[#008c8c]/10 text-[#008c8c] text-[12px] font-black flex items-center justify-center shrink-0">
-                 E
-               </div>
-               <div className="min-w-0 flex-1">
-                 <h5 className="text-slate-700 font-bold text-[11px] leading-tight">{item.title}</h5>
-                 <p className="text-slate-500 text-[11px] mt-1 leading-relaxed">{item.detail}</p>
-                 <span className="inline-block mt-2 px-2 py-0.5 bg-[#008c8c]/10 text-[#008c8c] text-[10px] font-bold rounded-md">{item.metric}</span>
-               </div>
-             </div>
-           </div>
+          <div key={item.id} className="p-4 bg-white border border-slate-100 rounded-2xl hover:border-[#008c8c]/30 hover:shadow-md transition-all group/emp">
+            <div className="flex gap-4">
+              <div className="w-8 h-8 rounded-lg bg-[#008c8c]/10 text-[#008c8c] text-[12px] font-black flex items-center justify-center shrink-0">
+                E
+              </div>
+              <div className="min-w-0 flex-1">
+                <h5 className="text-slate-700 font-bold text-[11px] leading-tight">{item.title}</h5>
+                <p className="text-slate-500 text-[11px] mt-1 leading-relaxed">{item.detail}</p>
+                <span className="inline-block mt-2 px-2 py-0.5 bg-[#008c8c]/10 text-[#008c8c] text-[10px] font-bold rounded-md">{item.metric}</span>
+              </div>
+            </div>
+          </div>
         ))}
 
         {activeTab === "PanKbase Links" && mockInternal.map(item => (
-           <div key={item.id} className="p-4 bg-white border border-slate-100 rounded-2xl hover:border-[#008c8c]/30 hover:shadow-md transition-all cursor-pointer group">
-             <div className="flex items-center justify-between">
-               <div className="flex items-center gap-4">
-                 <div className="w-10 h-10 rounded-full bg-[#008c8c]/10 flex items-center justify-center text-[#008c8c] font-black text-[11px]">PK</div>
-                 <div>
-                   <h5 className="text-slate-800 font-bold text-[11px] group-hover:text-[#008c8c] transition-colors">{item.title}</h5>
-                   <p className="text-slate-400 text-[11px] font-bold tracking-wide uppercase mt-0.5">{item.type}</p>
-                 </div>
-               </div>
-               <svg className="w-5 h-5 text-slate-300 group-hover:text-[#008c8c] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
-             </div>
-           </div>
+          <div key={item.id} className="p-4 bg-white border border-slate-100 rounded-2xl hover:border-[#008c8c]/30 hover:shadow-md transition-all cursor-pointer group">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded-full bg-[#008c8c]/10 flex items-center justify-center text-[#008c8c] font-black text-[11px]">PK</div>
+                <div>
+                  <h5 className="text-slate-800 font-bold text-[11px] group-hover:text-[#008c8c] transition-colors">{item.title}</h5>
+                  <p className="text-slate-400 text-[11px] font-bold tracking-wide uppercase mt-0.5">{item.type}</p>
+                </div>
+              </div>
+              <svg className="w-5 h-5 text-slate-300 group-hover:text-[#008c8c] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
+            </div>
+          </div>
         ))}
 
         {activeTab === "External Links" && mockExternal.map(item => (
-           <div key={item.id} className="p-4 bg-white border border-slate-100 rounded-2xl hover:border-[#008c8c]/30 hover:shadow-md transition-all cursor-pointer group">
-             <div className="flex gap-4 items-start">
-                <div className="w-8 h-8 rounded-full border border-slate-100 bg-slate-50 text-slate-400 group-hover:text-[#008c8c] group-hover:border-[#008c8c]/30 transition-all flex items-center justify-center shrink-0">
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-                </div>
-                <div className="min-w-0">
-                  <h5 className="text-slate-700 font-bold text-[11px] leading-tight group-hover:text-[#008c8c] transition-colors">{item.title}</h5>
-                  <p className="text-slate-400 text-[10px] font-bold uppercase mt-1">{item.source}</p>
-                </div>
-             </div>
-           </div>
+          <div key={item.id} className="p-4 bg-white border border-slate-100 rounded-2xl hover:border-[#008c8c]/30 hover:shadow-md transition-all cursor-pointer group">
+            <div className="flex gap-4 items-start">
+              <div className="w-8 h-8 rounded-full border border-slate-100 bg-slate-50 text-slate-400 group-hover:text-[#008c8c] group-hover:border-[#008c8c]/30 transition-all flex items-center justify-center shrink-0">
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+              </div>
+              <div className="min-w-0">
+                <h5 className="text-slate-700 font-bold text-[11px] leading-tight group-hover:text-[#008c8c] transition-colors">{item.title}</h5>
+                <p className="text-slate-400 text-[10px] font-bold uppercase mt-1">{item.source}</p>
+              </div>
+            </div>
+          </div>
         ))}
       </div>
     </div>
   );
 };
 
-// --- Main App ---
-
+// ✅ NEW HEADER (as you provided) — with path fixes (/img/...)
 const Header: React.FC = () => (
-  <header className="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-xl border-b border-slate-100 z-50">
-    <div className="max-w-[1920px] mx-auto px-10 h-[72px] flex items-center justify-between">
-      <div className="flex items-center gap-4">
-        <div className="w-12 h-12 bg-[#008c8c] rounded-[14px] flex items-center justify-center shadow-lg shadow-teal-500/20 text-white font-black text-2xl">P</div>
-        <div className="hidden sm:block">
-           <h1 className="text-[22px] font-black text-slate-800 tracking-tight leading-none">PanKbase</h1>
-           <span className="text-[10px] text-[#008c8c]/50 font-black tracking-[0.2em] uppercase mt-1 block">Genome Engine</span>
+  <header className="fixed top-0 left-0 right-0 bg-white z-50">
+    <div className="max-w-[1600px] mx-auto px-6 h-[72px] flex items-center justify-between">
+      {/* Left: Branding (logo image) */}
+      <a href="#" className="flex items-center">
+        <img
+          src="/img/pank.svg"
+          alt="PanKbase"
+          className="h-10 w-auto"
+        />
+      </a>
+
+      {/* Right: two-row layout with logo spanning 2 rows */}
+      <div className="grid grid-rows-2 grid-cols-[1fr_auto] items-center gap-x-4">
+        {/* Row 1, Col 1: utilities (right aligned) */}
+        <div className="row-start-1 col-start-1 flex items-center justify-end gap-5 text-[11px] font-semibold text-slate-700">
+          <a href="#" className="hover:text-[#008c8c]">Funding Opportunities</a>
+
+          <button className="flex items-center gap-1.5 hover:text-[#008c8c]">
+            <span>Search</span>
+            <span aria-hidden>🔍</span>
+          </button>
+
+          <a href="#" className="hover:text-[#008c8c]">Analysis</a>
+
+          <a href="#" className="flex items-center gap-1.5 hover:text-[#008c8c]">
+            <span>Login</span>
+            <span aria-hidden>👤</span>
+          </a>
+        </div>
+
+        {/* Row 2, Col 1: nav (right aligned) */}
+        <div className="row-start-2 col-start-1 flex items-center justify-end gap-4">
+          <a
+            href="#"
+            className="h-8 px-4 bg-[#008c8c] text-white flex items-center justify-center rounded-[8px] shadow-sm font-bold text-[13px]"
+          >
+            PanKgraph
+          </a>
+
+          <a href="#" className="text-[#008c8c] font-bold text-[13px] hover:underline">
+            Integrated Cell Browser
+          </a>
+
+          <span className="h-4 w-px bg-slate-200 mx-1" />
+
+          <a href="#" className="font-bold text-[13px] text-slate-800 hover:text-[#008c8c]">Data</a>
+          <a href="#" className="font-bold text-[13px] text-slate-800 hover:text-[#008c8c]">Resources</a>
+          <a href="#" className="font-bold text-[13px] text-slate-800 hover:text-[#008c8c]">About</a>
+          <a href="#" className="font-bold text-[13px] text-slate-800 hover:text-[#008c8c]">Help</a>
+        </div>
+
+        {/* Col 2: HiRN logo spans two rows */}
+        <div className="col-start-2 row-span-2 flex items-center justify-end pl-3">
+          <img
+            src="/img/hirn.svg"
+            alt="HiRN"
+            className="h-12 w-auto"
+          />
         </div>
       </div>
-      <div className="flex items-center gap-8">
-        <nav className="hidden lg:flex items-center gap-8 text-[14px] font-black text-slate-500">
-          <a href="#" className="hover:text-[#008c8c] transition-colors">Explorer</a>
-          <a href="#" className="hover:text-[#008c8c] transition-colors">Datasets</a>
-        </nav>
-        <button className="px-6 py-2.5 bg-[#008c8c] text-white rounded-xl font-black text-[12px] uppercase tracking-widest shadow-md hover:bg-teal-700 transition-all">PanKGraph</button>
-      </div>
+    </div>
+
+    {/* teal divider line */}
+    <div className="h-[3px] bg-[#008c8c]" />
+
+    {/* beta tag */}
+    <div className="max-w-[1600px] mx-auto px-6">
+      <span className="inline-flex -mt-3 translate-y-3 text-[11px] px-2 py-0.5 rounded bg-[#008c8c] text-white font-bold">
+        beta
+      </span>
     </div>
   </header>
 );
+
+// --- Main App ---
 
 const App: React.FC = () => {
   const [turns, setTurns] = useState<TurnData[]>([INITIAL_TURN]);
@@ -394,10 +438,10 @@ const App: React.FC = () => {
 
       const text = response.text;
       if (!text) throw new Error("Empty response");
-      
+
       const result = JSON.parse(text);
       const turnId = `turn-${Date.now()}`;
-      
+
       setTurns(prev => [...prev, {
         id: turnId,
         query: query,
@@ -405,6 +449,7 @@ const App: React.FC = () => {
         citations: result.citations || [],
         followUpQuestions: result.followUpQuestions || []
       }]);
+
       setTimeout(() => navigateTo(turnId), 100);
     } catch (error) {
       console.error("Gemini Error:", error);
@@ -415,7 +460,7 @@ const App: React.FC = () => {
 
   const navigateTo = (id: string) => {
     const el = scrollRefs.current[id];
-    if (el) window.scrollTo({ top: el.offsetTop - 100, behavior: 'smooth' });
+    if (el) window.scrollTo({ top: el.offsetTop - 120, behavior: 'smooth' });
   };
 
   return (
@@ -426,21 +471,17 @@ const App: React.FC = () => {
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
       `}</style>
 
-      <div className="max-w-[1920px] mx-auto px-10 pt-[104px] flex">
-        
-        {/* Timeline Sidebar */}
+      {/* ✅ increased top padding to clear header + divider + beta */}
+      <div className="max-w-[1920px] mx-auto px-10 pt-[120px] flex">
         {showSidebar && <GlobalDirectory turns={turns} onNavigate={navigateTo} />}
 
-        {/* Main Content Area - Compensate for sidebar width */}
         <div className={`flex-1 flex flex-col gap-14 ${showSidebar ? 'xl:ml-[160px]' : ''}`}>
           {turns.map((turn, idx) => (
-            <article 
-              key={turn.id} 
+            <article
+              key={turn.id}
               ref={el => { scrollRefs.current[turn.id] = el; }}
               className="bg-white rounded-[40px] border border-slate-200/50 shadow-sm overflow-hidden flex flex-col transition-all hover:shadow-2xl hover:shadow-slate-200/20"
             >
-              
-              {/* Horizontal Question Header */}
               <section className="w-full px-12 py-12 bg-slate-50/40 border-b border-slate-100">
                 <div className="flex items-start gap-8">
                   <div className="mt-1.5 bg-[#008c8c] text-white text-[11px] font-black px-4 py-2 rounded-xl uppercase tracking-widest shrink-0 shadow-lg shadow-teal-500/20">
@@ -452,7 +493,6 @@ const App: React.FC = () => {
                 </div>
               </section>
 
-              {/* 2-Column Insight Content */}
               <div className="flex flex-col lg:flex-row min-h-[500px]">
                 <div className="flex-1 p-12 lg:border-r border-slate-50">
                   <AIOverviewContent data={turn.aiOverview} />
@@ -460,9 +500,15 @@ const App: React.FC = () => {
                     <SectionHeader label="Follow up" />
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                       {turn.followUpQuestions.map((q, i) => (
-                        <button key={i} onClick={() => handleAsk(q)} className="text-left p-4 bg-slate-50 rounded-2xl border border-slate-100 hover:bg-white hover:border-[#008c8c]/40 hover:shadow-xl hover:-translate-y-0.5 transition-all group flex items-center justify-between">
+                        <button
+                          key={i}
+                          onClick={() => handleAsk(q)}
+                          className="text-left p-4 bg-slate-50 rounded-2xl border border-slate-100 hover:bg-white hover:border-[#008c8c]/40 hover:shadow-xl hover:-translate-y-0.5 transition-all group flex items-center justify-between"
+                        >
                           <span className="text-slate-600 text-[13px] font-bold group-hover:text-[#008c8c] line-clamp-1">{q}</span>
-                          <svg className="w-4 h-4 text-[#008c8c] opacity-0 group-hover:opacity-100 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M9 5l7 7-7 7" /></svg>
+                          <svg className="w-4 h-4 text-[#008c8c] opacity-0 group-hover:opacity-100 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M9 5l7 7-7 7" />
+                          </svg>
                         </button>
                       ))}
                     </div>
@@ -479,18 +525,17 @@ const App: React.FC = () => {
         </div>
       </div>
 
-      {/* Floating Search Bar */}
       <div className="fixed bottom-12 left-0 right-0 z-50 flex justify-center px-10 pointer-events-none">
         <div className="max-w-[800px] w-full pointer-events-auto">
           <div className="bg-white/95 backdrop-blur-3xl rounded-[32px] border border-slate-200 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.2)] p-3 flex items-center gap-5 pl-8 pr-3 h-20 ring-1 ring-slate-900/5 focus-within:ring-[#008c8c]/30">
-            <input 
+            <input
               value={inputValue}
               onChange={e => setInputValue(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleAsk(inputValue)}
-              placeholder="Ask for genomic insights..." 
+              placeholder="Ask for genomic insights..."
               className="flex-1 bg-transparent border-none outline-none text-[17px] font-normal text-slate-700 placeholder-slate-400"
             />
-            <button 
+            <button
               onClick={() => handleAsk(inputValue)}
               disabled={isLoading}
               className={`h-14 px-10 bg-[#008c8c] text-white rounded-2xl font-black text-[14px] uppercase tracking-widest hover:bg-teal-700 transition-all shadow-xl shadow-teal-500/20 flex items-center gap-3 ${isLoading ? 'opacity-70' : ''}`}
