@@ -421,42 +421,33 @@ const App: React.FC = () => {
 
   const handleAsk = async (query: string) => {
     if (!query.trim()) return;
+
     setIsLoading(true);
     setInputValue('');
 
-    try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-      const response = await ai.models.generateContent({
-        model: 'gemini-3-pro-preview',
-        contents: query,
-        config: {
-          systemInstruction: "Expert bioinformatician for PanKbase. Provide structured analysis for genome queries.",
-          responseMimeType: 'application/json',
-          responseSchema: RESPONSE_SCHEMA,
-        }
-      });
-
-      const text = response.text;
-      if (!text) throw new Error("Empty response");
-
-      const result = JSON.parse(text);
+    // ✅ 纯展示：模拟请求延迟 + 追加一张“新卡片”
+    setTimeout(() => {
       const turnId = `turn-${Date.now()}`;
 
-      setTurns(prev => [...prev, {
-        id: turnId,
-        query: query,
-        aiOverview: result.aiOverview,
-        citations: result.citations || [],
-        followUpQuestions: result.followUpQuestions || []
-      }]);
+      setTurns(prev => [
+        ...prev,
+        {
+          ...INITIAL_TURN,          // 直接复用 mock 内容
+          id: turnId,
+          query,                    // 只换问题
+          // 你也可以顺便在 overview 里加点变化，显得更“像真的”
+          aiOverview: {
+            ...INITIAL_TURN.aiOverview,
+            gene: `(${query})\n\n` + INITIAL_TURN.aiOverview.gene,
+          },
+        }
+      ]);
 
-      setTimeout(() => navigateTo(turnId), 100);
-    } catch (error) {
-      console.error("Gemini Error:", error);
-    } finally {
       setIsLoading(false);
-    }
+      setTimeout(() => navigateTo(turnId), 100);
+    }, 500);
   };
+
 
   const navigateTo = (id: string) => {
     const el = scrollRefs.current[id];
